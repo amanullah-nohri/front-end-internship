@@ -1,0 +1,82 @@
+@media only screen and (min-width: 200px) and (max-width: 600px){
+header {
+    flex-direction: column;
+    
+}
+.logo{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+}
+.logo h1{
+    color: white;
+
+}
+.menu{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 40%;
+    justify-content: center;
+
+}
+.menu ul li a{
+    color: orange;
+}
+
+.hero{
+    display: flex;
+    flex-direction: column-reverse;
+
+}
+
+.hero .right-hero{
+    width: 100%;
+}
+.hero .left-hero{
+    width: 100%;
+    margin-left: 0px;
+    text-align: justify;
+    margin-top: 50px;
+    padding-left: 0px;
+    padding: 5px;
+}
+.hero .left-hero h1,h2{
+    text-align: center;
+}
+.hero .left-hero p{
+    padding: 10px;
+    text-align: center;
+}
+footer .left{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+
+
+}
+footer .center{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    /* border-top: 1px solid rgba(226, 216, 216, 0.3); */
+
+
+
+
+}
+footer .right{
+    width: 100%;
+    text-align: center;
+    /* border-top: 1px solid rgba(226, 216, 216, 0.3); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+}
