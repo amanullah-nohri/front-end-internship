@@ -1,1 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task 3 — Enhanced Landing Page</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/70a1db0a94.js" crossorigin="anonymous"></script>
+  <style>
+    :root{
+      --bg:#0b1020; --card:#0f1724; --accent:#ff7a18; --muted:#9aa4bf; --glass: rgba(255,255,255,0.04);
+      --radius:14px; --max-width:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Arial; background:var(--bg); color:#e6eef8; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max-width); margin:0 auto; padding:0 20px}
+
+    /* NAV */
+    header{position:fixed; inset:0 0 auto 0; z-index:60; backdrop-filter: blur(6px);}
+    .navwrap{display:flex; align-items:center; justify-content:space-between; padding:14px 0; max-width:var(--max-width); margin:0 auto}
+    .brand{display:flex; gap:10px; align-items:center}
+    .brand .logo{width:44px; height:44px; background:linear-gradient(135deg,var(--accent),#ffd27b); border-radius:10px; display:grid; place-items:center; font-weight:800; color:#081126}
+    nav ul{display:flex; gap:18px; align-items:center; margin:0; padding:0; list-style:none}
+    nav a{padding:8px 10px; border-radius:8px; color:var(--muted); font-weight:600}
+    nav a.active{color:#fff; background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));}
+    .cta-btn{background:linear-gradient(90deg,var(--accent),#ffd27b); color:#081126; border:none; padding:8px 14px; border-radius:10px; font-weight:700; cursor:pointer}
+
+    /* Hamburger */
+    .hamburger{display:none; background:transparent; border:none; color:var(--muted); font-size:20px}
+    .mobile-nav{display:none}
+
+    /* HERO */
+    .hero{min-height:100vh; display:grid; grid-template-columns:1fr 420px; gap:28px; align-items:center; padding:110px 0}
+    .hero-left{max-width:640px}
+    h1{font-size:48px; margin:0 0 14px; line-height:1.02}
+    p.lead{color:var(--muted); font-size:18px; margin:0 0 18px}
+    .hero-buttons{display:flex; gap:12px}
+    .btn{padding:12px 18px; border-radius:10px; background:transparent; border:1px solid rgba(255,255,255,0.06); cursor:pointer; color:#fff; font-weight:700}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#ffd27b); color:#081126}
+    .btn:hover{transform:translateY(-3px); transition:all .25s ease}
+    .btn:active{transform:translateY(0)}
+
+    /* hero bg animated gradient and shapes */
+    .hero-right{position:relative; height:420px; border-radius:18px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); display:grid; place-items:center}
+    .gradient-anim{position:absolute; inset:0; background:linear-gradient(120deg, rgba(255,122,24,0.18), rgba(0,120,255,0.12), rgba(155,0,255,0.09)); filter:blur(36px); animation:shift 10s linear infinite; opacity:0.9}
+    @keyframes shift{0%{transform:translateX(-10%)}50%{transform:translateX(10%)}100%{transform:translateX(-10%)}}
+    .shape{position:absolute; border-radius:50%; opacity:0.25; mix-blend-mode:screen}
+    .shape.s1{width:220px;height:220px; background:rgba(255,122,24,0.9); top:10%; left:-20%}
+    .shape.s2{width:140px;height:140px; background:rgba(0,120,255,0.9); bottom:-10%; right:-10%}
+    .shape.s3{width:90px;height:90px; background:rgba(155,0,255,0.85); top:40%; right:10%}
+    .hero-card{position:relative; z-index:5; width:88%; padding:18px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow:0 6px 30px rgba(2,8,23,0.6);}
+
+    /* SERVICES */
+    section.services{padding:80px 0}
+    .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .card{background:var(--card); border-radius:12px; padding:18px; min-height:160px; transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s; display:flex; gap:12px; align-items:center}
+    .card:hover{transform:translateY(-12px) scale(1.02); box-shadow:0 20px 40px rgba(2,8,23,0.6)}
+    .card .icon{width:64px;height:64px;border-radius:12px; display:grid; place-items:center; font-size:22px; background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))}
+    .card h4{margin:0 0 6px}
+    .services-carousel{position:relative; display:none}
+    .carousel-controls{display:flex; justify-content:center; gap:12px; margin-top:12px}
+
+    /* CONTACT */
+    section.contact{padding:70px 0}
+    form{display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:720px}
+    input,textarea{padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit}
+    textarea{grid-column:1/-1; min-height:120px; resize:vertical}
+    .submit-wrap{grid-column:1/-1; display:flex; justify-content:flex-end}
+    .submit{padding:12px 18px; border-radius:10px; border:none; background:linear-gradient(90deg,var(--accent),#ffd27b); color:#081126; font-weight:800; cursor:pointer}
+    .msg{margin-top:10px; font-weight:700}
+
+    /* FOOTER */
+    footer{padding:36px 0; border-top:1px solid rgba(255,255,255,0.03); margin-top:30px}
+    .socials a{padding:8px; margin-right:8px; border-radius:8px; display:inline-block}
+    .socials a:hover{transform:translateY(-4px)}
+
+    /* UTILITIES */
+    .section{padding:80px 0}
+    .subtitle{color:var(--muted); font-weight:600; margin-bottom:8px}
+    .fade-in{opacity:0; transform:translateY(18px); transition:all .6s ease}
+    .fade-in.in-view{opacity:1; transform:none}
+
+    /* Modal */
+    .modal-backdrop{position:fixed; inset:0; display:grid; place-items:center; background:rgba(3,6,16,0.6); z-index:120; visibility:hidden; opacity:0; transition:all .2s}
+    .modal-backdrop.show{visibility:visible; opacity:1}
+    .modal{background:var(--card); padding:20px; border-radius:12px; width:92%; max-width:480px}
+
+    /* Responsive */
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr; padding-top:120px}
+      .hero-right{height:320px}
+      .services-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:680px){
+      nav ul{display:none}
+      .hamburger{display:block}
+      .mobile-nav{display:block; position:absolute; top:70px; left:0; right:0; background:rgba(6,8,16,0.95); border-top:1px solid rgba(255,255,255,0.02); padding:12px; display:none}
+      .mobile-nav.show{display:block}
+      .hero{padding-top:100px}
+      .services-grid{grid-template-columns:1fr}
+      .hero-right{display:none}
+      header{position:fixed}
+      form{grid-template-columns:1fr}
+    }
+
+    /* small tweaks */
+    .tag{display:inline-block; padding:6px 8px; background:var(--glass); border-radius:8px; color:var(--muted); font-weight:600}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navwrap container">
+      <div class="brand">
+        <div class="logo">A</div>
+        <div>
+          <div style="font-weight:700">Amanullah</div>
+          <div style="font-size:12px;color:var(--muted)">Front-end / UI</div>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#home" class="navlink active">Home</a></li>
+          <li><a href="#services" class="navlink">Services</a></li>
+          <li><a href="#contact" class="navlink">Contact</a></li>
+          <li><a href="#about" class="navlink">About</a></li>
+        </ul>
+      </nav>
+      <div style="display:flex; gap:10px; align-items:center">
+        <button class="cta-btn" id="openModalBtn">Get Started</button>
+        <button class="hamburger" id="hamb"> <i class="fa fa-bars"></i></button>
+      </div>
+    </div>
+    <div class="mobile-nav container" id="mobileNav">
+      <a href="#home" class="navlink">Home</a><br>
+      <a href="#services" class="navlink">Services</a><br>
+      <a href="#contact" class="navlink">Contact</a><br>
+      <a href="#about" class="navlink">About</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="home" class="hero container">
+      <div class="hero-left">
+        <span class="tag">Professional Landing</span>
+        <h1>Build beautiful, responsive interfaces with motion & interactivity</h1>
+        <p class="lead">This enhanced Task 3 landing page demonstrates advanced front-end techniques: sticky navigation, animated hero, interactive cards, form validation, responsive layout and scroll animations.</p>
+        <div class="hero-buttons">
+          <button class="btn primary" id="primaryCta">Start Project</button>
+          <button class="btn" id="learnBtn">Learn More</button>
+        </div>
+        <div style="margin-top:18px; color:var(--muted); font-size:13px">Trusted by students learning modern UI skills.</div>
+      </div>
+
+      <div class="hero-right">
+        <div class="gradient-anim"></div>
+        <div class="shape s1"></div>
+        <div class="shape s2"></div>
+        <div class="shape s3"></div>
+
+        <div class="hero-card fade-in in-view">
+          <h3 style="margin:0">Interactive preview</h3>
+          <p style="color:var(--muted); margin:8px 0 0">This card sits over the animated background — hover and try the buttons in the live version.</p>
+          <div style="display:flex; gap:8px; margin-top:12px">
+            <button class="btn">Explore</button>
+            <button class="btn">Docs</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="services section container">
+      <div style="display:flex; justify-content:space-between; align-items:end; gap:12px; margin-bottom:18px">
+        <div>
+          <div class="subtitle">What I offer</div>
+          <h2 style="margin:6px 0 0">Services & Features</h2>
+        </div>
+        <div class="tag">Advanced UI</div>
+      </div>
+
+      <div class="services-grid">
+        <div class="card fade-in">
+          <div class="icon"><i class="fa fa-laptop-code"></i></div>
+          <div>
+            <h4>Responsive Web</h4>
+            <p style="color:var(--muted); margin:6px 0 0">Pixel-perfect responsive designs from mobile to desktop.</p>
+          </div>
+        </div>
+
+        <div class="card fade-in">
+          <div class="icon"><i class="fa fa-paint-brush"></i></div>
+          <div>
+            <h4>UI Animations</h4>
+            <p style="color:var(--muted); margin:6px 0 0">Fluid micro-interactions, hover states and keyframe effects.</p>
+          </div>
+        </div>
+
+        <div class="card fade-in">
+          <div class="icon"><i class="fa fa-cogs"></i></div>
+          <div>
+            <h4>Interactive Components</h4>
+            <p style="color:var(--muted); margin:6px 0 0">Modals, sliders, validation and accessible UI patterns.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Optional simple carousel for small screens -->
+      <div class="services-carousel" aria-hidden>
+        <div class="carousel-slide">Slide 1</div>
+      </div>
+
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact section container">
+      <div style="display:flex; justify-content:space-between; align-items:end; gap:12px; margin-bottom:18px">
+        <div>
+          <div class="subtitle">Get in touch</div>
+          <h2 style="margin:6px 0 0">Contact Me</h2>
+        </div>
+        <div style="color:var(--muted); font-size:14px">Available for freelancing & student projects</div>
+      </div>
+
+      <form id="contactForm" novalidate>
+        <input type="text" id="name" name="name" placeholder="Your name" required />
+        <input type="email" id="email" name="email" placeholder="Your email" required />
+        <input type="text" id="subject" name="subject" placeholder="Subject" />
+        <textarea id="message" name="message" placeholder="Message" required></textarea>
+        <div class="submit-wrap">
+          <div>
+            <button type="submit" class="submit" id="submitBtn">Send Message</button>
+            <div id="formMsg" class="msg" aria-live="polite"></div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- ABOUT / Footer area -->
+    <section id="about" class="section container">
+      <div style="display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap">
+        <div style="flex:1; min-width:260px">
+          <h3>About this demo</h3>
+          <p style="color:var(--muted)">Students will practice advanced CSS animations, IntersectionObserver for scroll effects, form validation, responsive nav, and small interactive widgets.</p>
+        </div>
+        <div style="min-width:240px">
+          <h4>Quick links</h4>
+          <ul style="color:var(--muted); padding-left:16px">
+            <li>Portfolio</li>
+            <li>Courses</li>
+            <li>Contact</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap">
+      <div style="display:flex; gap:10px; align-items:center">
+        <div class="logo" style="width:40px;height:40px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#ffd27b); display:grid; place-items:center; color:#081126;font-weight:800">A</div>
+        <div>
+          <div style="font-weight:700">Amanullah</div>
+          <div style="font-size:12px;color:var(--muted)">Built with ❤️ for learning</div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:16px; align-items:center">
+        <div class="socials">
+          <a href="#" title="Twitter"><i class="fa fa-twitter"></i></a>
+          <a href="#" title="Github"><i class="fa fa-github"></i></a>
+          <a href="#" title="LinkedIn"><i class="fa fa-linkedin"></i></a>
+        </div>
+        <div style="color:var(--muted); font-size:13px">© <span id="year"></span> Amanullah. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal markup -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal">
+      <h3>Start a Project</h3>
+      <p style="color:var(--muted)">Tell me briefly about your project and I'll get back with next steps.</p>
+      <form id="modalForm">
+        <input required placeholder="Your name" style="width:100%; margin-top:10px" />
+        <input required placeholder="Email" style="width:100%; margin-top:10px" type="email" />
+        <textarea placeholder="Short message" style="width:100%; margin-top:10px"></textarea>
+        <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:12px">
+          <button type="button" class="btn" id="closeModal">Cancel</button>
+          <button type="submit" class="btn primary">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Utilities: set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth scroll for nav
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href.startsWith('#')){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el){
+            el.scrollIntoView({behavior:'smooth', block:'start'});
+          }
+          // close mobile nav
+          document.getElementById('mobileNav').classList.remove('show');
+        }
+      });
+    });
+
+    // Sticky header active link detection
+    const sections = Array.from(document.querySelectorAll('main section'));
+    const navLinks = Array.from(document.querySelectorAll('.navlink'));
+
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const id = entry.target.id;
+          navLinks.forEach(l=>l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+        }
+      })
+    }, {threshold:0.45});
+
+    sections.forEach(s=>obs.observe(s));
+
+    // Hamburger toggle
+    const ham = document.getElementById('hamb');
+    ham.addEventListener('click', ()=>{
+      document.getElementById('mobileNav').classList.toggle('show');
+    });
+
+    // Modal logic
+    const modal = document.getElementById('modal');
+    document.getElementById('openModalBtn').addEventListener('click', ()=> modal.classList.add('show'));
+    document.getElementById('closeModal').addEventListener('click', ()=> modal.classList.remove('show'));
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.remove('show'); });
+    document.getElementById('modalForm').addEventListener('submit', (e)=>{ e.preventDefault(); alert('Thanks! I received your message (demo)'); modal.classList.remove('show'); });
+
+    // Contact form validation
+    const form = document.getElementById('contactForm');
+    const formMsg = document.getElementById('formMsg');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault(); formMsg.textContent='';
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if(!name || !email || !message){
+        formMsg.style.color = '#ff7a7a'; formMsg.textContent = 'Please fill required fields.'; return;
+      }
+      if(!emailRe.test(email)){
+        formMsg.style.color = '#ff7a7a'; formMsg.textContent = 'Please enter a valid email.'; return;
+      }
+
+      // simulate success animation on button
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true; const old = btn.textContent; btn.textContent = 'Sending...';
+      btn.animate([{transform:'scale(1)'},{transform:'scale(0.98)'}], {duration:200, fill:'forwards'});
+
+      setTimeout(()=>{
+        btn.disabled=false; btn.textContent = old; form.reset(); formMsg.style.color = '#9ff7c7'; formMsg.textContent = 'Message sent successfully! (demo)';
+      }, 900);
+    });
+
+    // Fade-in on scroll with IntersectionObserver
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {threshold:0.2, rootMargin:'0px 0px -40px 0px'};
+    const appearOnScroll = new IntersectionObserver((entries, obs)=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting) return;
+        entry.target.classList.add('in-view');
+        obs.unobserve(entry.target);
+      });
+    }, appearOptions);
+    faders.forEach(f=>appearOnScroll.observe(f));
+
+    // Highlight active nav on scroll - extra polish (handles header offset)
+    // (Already handled above with section intersection)
+
+    // Optional: small keyboard accessibility improvements
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape') modal.classList.remove('show');
+    });
+
+    // Demo: clicking CTA scrolls to contact
+    document.getElementById('primaryCta').addEventListener('click', ()=>{
+      document.querySelector('#contact').scrollIntoView({behavior:'smooth'});
+    });
+    document.getElementById('learnBtn').addEventListener('click', ()=>{
+      document.querySelector('#services').scrollIntoView({behavior:'smooth'});
+    });
+  </script>
+</body>
+</html>
 
