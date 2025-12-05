@@ -1,0 +1,22 @@
+{
+  "services": [
+    {
+      "title": "Web Development",
+      "text": "Modern and responsive websites."
+    },
+    {
+      "title": "AI Tools",
+      "text": "Automation and smart solutions."
+    }
+  ],
+  "testimonials": [
+    {
+      "title": "Client A",
+      "text": "Amazing work!"
+    },
+    {
+      "title": "Client B",
+      "text": "Professional and quick delivery."
+    }
+  ]
+}
