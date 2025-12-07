@@ -2,100 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Multi-Page Dynamic Site</title>
-  <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TaskBoard — Internship Final Project</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="site-header">
-    <nav id="navbar" class="navbar">
-      <div class="brand"><a href="index.html">MySite</a></div>
-      <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
-      <ul class="nav-list" id="nav-list">
-        <li><a href="#home" class="nav-link">Home</a></li>
-        <li><a href="#services" class="nav-link">Services</a></li>
-        <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
-        <li><a href="#blog" class="nav-link">Blog</a></li>
-        <li><a href="#api" class="nav-link">API</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
-    </nav>
+  <header class="header">
+    <h1>TaskBoard</h1>
+    <p class="subtitle">A lightweight Kanban-style task board — internship final project</p>
+    <div class="controls">
+      <input id="new-task-input" placeholder="Add a new task and press Enter..." />
+      <button id="clear-storage" title="Clear saved tasks">Reset</button>
+    </div>
   </header>
 
-  <main>
-    <section id="home" class="hero">
-      <div class="container">
-        <h1>Welcome to the Dynamic Multi-Page Site</h1>
-        <p>Learn DOM, APIs, animations, and responsive patterns.</p>
-        <a class="btn" href="#services">See Services</a>
-      </div>
+  <main class="board" id="board">
+    <section class="column" data-status="todo">
+      <h2>To Do</h2>
+      <div class="list" id="todo-list"></div>
     </section>
 
-    <section id="services" class="section" aria-labelledby="services-heading">
-      <div class="container">
-        <h2 id="services-heading">Services</h2>
-        <div id="services-list" class="grid"></div>
-      </div>
+    <section class="column" data-status="inprogress">
+      <h2>In Progress</h2>
+      <div class="list" id="inprogress-list"></div>
     </section>
 
-    <section id="testimonials" class="section">
-      <div class="container">
-        <h2>Testimonials</h2>
-        <div id="testimonials-list" class="cards"></div>
-      </div>
-    </section>
-
-    <section id="blog" class="section">
-      <div class="container">
-        <h2>Latest Posts</h2>
-        <div id="posts-list" class="posts"></div>
-      </div>
-    </section>
-
-    <section id="api" class="section">
-      <div class="container">
-        <h2>Quote of the moment</h2>
-        <div id="quote">Loading quote…</div>
-        <button id="fetch-quote" class="btn small">New Quote</button>
-      </div>
-    </section>
-
-    <section id="contact" class="section">
-      <div class="container">
-        <h2>Contact Us</h2>
-        <form id="contact-form" novalidate>
-          <label>
-            Name<br>
-            <input type="text" id="name" required minlength="2" />
-            <small class="error" data-for="name"></small>
-          </label>
-
-          <label>
-            Email<br>
-            <input type="email" id="email" required />
-            <small class="error" data-for="email"></small>
-          </label>
-
-          <label>
-            Message<br>
-            <textarea id="message" required minlength="10"></textarea>
-            <small class="error" data-for="message"></small>
-          </label>
-
-          <button type="submit" class="btn">Send</button>
-          <div id="form-feedback" class="form-feedback" role="status"></div>
-        </form>
-      </div>
+    <section class="column" data-status="done">
+      <h2>Done</h2>
+      <div class="list" id="done-list"></div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container">© Your Name — MultiPage Demo</div>
+  <footer class="footer">
+    <small>Built with HTML/CSS/JS • Saves to localStorage • Drag & drop</small>
   </footer>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script type="module" src="js/main.js"></script>
+  <template id="task-template">
+    <article class="task" draggable="true">
+      <div class="task-content"></div>
+      <div class="task-actions">
+        <button class="edit">✏️</button>
+        <button class="delete">🗑️</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js"></script>
 </body>
 </html>
