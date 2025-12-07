@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Services — MultiPage</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="brand"><a href="index.html">MySite</a></div>
+      <ul class="nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    <h1>Services</h1>
+    <div id="services-list-page"></div>
+  </main>
+  <script type="module">
+    import data from './data/posts.json' assert { type: 'json' };
+    const list = document.getElementById('services-list-page');
+    data.services.forEach(s=>{
+      const d = document.createElement('div');
+      d.className = 'card';
+      d.innerHTML = `<h3>${s.icon} ${s.title}</h3><p>${s.desc}</p>`;
+      list.appendChild(d);
+    });
+  </script>
+  <footer class="site-footer">
+    <div class="container">© Your Name — MultiPage Demo</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "services": [
+    {
+      "title": "Web Development",
+      "desc": "Modern responsive websites.",
+      "icon": "\ud83d\udd78\ufe0f"
+    },
+    {
+      "title": "UI/UX Design",
+      "desc": "User-centered interfaces.",
+      "icon": "\ud83c\udfa8"
+    },
+    {
+      "title": "API Integration",
+      "desc": "Connect third-party services.",
+      "icon": "\ud83d\udd17"
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Ali",
+      "text": "Great work!"
+    },
+    {
+      "name": "Sara",
+      "text": "Fast and professional."
+    }
+  ],
+  "posts": [
+    {
+      "title": "How to fetch APIs",
+      "summary": "A short guide to fetch()"
+    },
+    {
+      "title": "DOM tips",
+      "summary": "Speed up your DOM updates"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Multi-Page Dynamic Site</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="site-header">
+    <nav id="navbar" class="navbar">
+      <div class="brand"><a href="index.html">MySite</a></div>
+      <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <ul class="nav-list" id="nav-list">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+        <li><a href="#blog" class="nav-link">Blog</a></li>
+        <li><a href="#api" class="nav-link">API</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container">
+        <h1>Welcome to the Dynamic Multi-Page Site</h1>
+        <p>Learn DOM, APIs, animations, and responsive patterns.</p>
+        <a class="btn" href="#services">See Services</a>
+      </div>
+    </section>
+
+    <section id="services" class="section" aria-labelledby="services-heading">
+      <div class="container">
+        <h2 id="services-heading">Services</h2>
+        <div id="services-list" class="grid"></div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="section">
+      <div class="container">
+        <h2>Testimonials</h2>
+        <div id="testimonials-list" class="cards"></div>
+      </div>
+    </section>
+
+    <section id="blog" class="section">
+      <div class="container">
+        <h2>Latest Posts</h2>
+        <div id="posts-list" class="posts"></div>
+      </div>
+    </section>
+
+    <section id="api" class="section">
+      <div class="container">
+        <h2>Quote of the moment</h2>
+        <div id="quote">Loading quote…</div>
+        <button id="fetch-quote" class="btn small">New Quote</button>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <form id="contact-form" novalidate>
+          <label>
+            Name<br>
+            <input type="text" id="name" required minlength="2" />
+            <small class="error" data-for="name"></small>
+          </label>
+
+          <label>
+            Email<br>
+            <input type="email" id="email" required />
+            <small class="error" data-for="email"></small>
+          </label>
+
+          <label>
+            Message<br>
+            <textarea id="message" required minlength="10"></textarea>
+            <small class="error" data-for="message"></small>
+          </label>
+
+          <button type="submit" class="btn">Send</button>
+          <div id="form-feedback" class="form-feedback" role="status"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© Your Name — MultiPage Demo</div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
