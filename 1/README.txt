@@ -1,1 +1,0 @@
-This is a basic folder structure. Add your files here.
